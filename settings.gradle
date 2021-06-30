@@ -1,0 +1,3 @@
+include ':module_network'
+include ':app'
+rootProject.name = "module_http"
