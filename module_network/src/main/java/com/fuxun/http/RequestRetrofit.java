@@ -7,6 +7,7 @@ import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 
 import java.util.concurrent.TimeUnit;
 
+import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
@@ -29,7 +30,7 @@ public class RequestRetrofit {
      */
     private static Retrofit retrofit;
 
-    private static void initOkHttpClient() {
+    private static void initOkHttpClient(Interceptor requestInterceptor, Interceptor responseInterceptor) {
         if (okHttpClient == null) {
             synchronized (RequestRetrofit.class) {
                 if (okHttpClient == null) {
@@ -37,7 +38,7 @@ public class RequestRetrofit {
                         .addInterceptor(new HttpLoggingInterceptor(new HttpLoggingInterceptor.Logger() {
                             @Override
                             public void log(String message) {
-                                Log.i("RequestRetrofit", message);
+                                Log.d("RequestRetrofit", message);
                             }
                         })
                         .setLevel(HttpLoggingInterceptor.Level.BODY))
@@ -45,14 +46,17 @@ public class RequestRetrofit {
                         .readTimeout(TIME_OUT, TimeUnit.SECONDS)
                         .writeTimeout(TIME_OUT, TimeUnit.SECONDS)
                         .addNetworkInterceptor(new StethoInterceptor())
+                        .addInterceptor(requestInterceptor)
+                        .addInterceptor(responseInterceptor)
                         .build();
                 }
             }
         }
     }
 
-    public static void initRetrofit(final String baseUrl) {
-        initOkHttpClient();
+    public static void initRetrofit(final String baseUrl,
+        Interceptor requestInterceptor, Interceptor responseInterceptor) {
+        initOkHttpClient(requestInterceptor, responseInterceptor);
         if (retrofit == null) {
             synchronized (RequestRetrofit.class) {
                 if(retrofit == null) {

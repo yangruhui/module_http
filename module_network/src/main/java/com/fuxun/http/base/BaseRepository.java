@@ -24,7 +24,7 @@ public class BaseRepository {
      */
     public <T> MutableLiveData<BaseDto<T>> request(Flowable<BaseDto<T>> flowable) {
         BaseSubscriber<T> baseSubscriber = new BaseSubscriber<>();
-        flowable.subscribeOn(Schedulers.io()) //解决背压
+        flowable.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(baseSubscriber);
         return baseSubscriber.getData();

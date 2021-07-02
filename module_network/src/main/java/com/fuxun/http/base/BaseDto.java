@@ -11,28 +11,28 @@ import java.io.Serializable;
 public class BaseDto<T> implements Serializable {
 
     // 返回码
-    private String statusCode;
+    private String code;
 
     // 描述
-    private String statusDesc;
+    private String message;
 
     // 数据
     private T data;
 
-    public String getStatusCode() {
-        return statusCode;
+    public String getCode() {
+        return code;
     }
 
-    public void setStatusCode(String statusCode) {
-        this.statusCode = statusCode;
+    public void setCode(String code) {
+        this.code = code;
     }
 
-    public String getStatusDesc() {
-        return statusDesc;
+    public String getMessage() {
+        return message;
     }
 
-    public void setStatusDesc(String statusDesc) {
-        this.statusDesc = statusDesc;
+    public void setMessage(String message) {
+        this.message = message;
     }
 
     public T getData() {

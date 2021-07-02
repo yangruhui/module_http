@@ -34,8 +34,8 @@ public class BaseSubscriber<T> implements Subscriber<BaseDto<T>> {
     public void onError(Throwable t) {
         ApiException ex = ExceptionEngine.handleException(t);
         BaseDto baseDto = new BaseDto();
-        baseDto.setStatusCode(ex.getStatusCode());
-        baseDto.setStatusDesc(ex.getStatusDesc());
+        baseDto.setCode(ex.getStatusCode());
+        baseDto.setMessage(ex.getStatusDesc());
         setData(baseDto);
     }
 
